@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lulu's Grill – Nova Vida, Luanda</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fire: #C9440A;
+    --ember: #E8720C;
+    --charcoal: #1A1410;
+    --ash: #2E2420;
+    --cream: #F9F3EC;
+    --muted: #8A7060;
+    --gold: #D4A843;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--charcoal);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 5vw;
+    background: rgba(26,20,16,0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(201,68,10,0.15);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 900;
+    color: var(--cream); letter-spacing: 0.02em;
+  }
+  .nav-logo span { color: var(--fire); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.82rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--muted); text-decoration: none;
+    transition: color 0.25s;
+  }
+  .nav-links a:hover { color: var(--cream); }
+  .nav-cta {
+    background: var(--fire); color: var(--cream);
+    border: none; padding: 0.65rem 1.5rem;
+    font-size: 0.82rem; font-weight: 600; letter-spacing: 0.1em;
+    text-transform: uppercase; cursor: pointer;
+    text-decoration: none; transition: background 0.25s;
+  }
+  .nav-cta:hover { background: var(--ember); }
+
+  /* ── HERO ── */
+  .hero {
+    height: 100vh; display: flex; align-items: center;
+    position: relative; overflow: hidden;
+    background: linear-gradient(135deg, #0d0a07 0%, #1A1410 50%, #2a1508 100%);
+  }
+  .hero-bg-pattern {
+    position: absolute; inset: 0; opacity: 0.04;
+    background-image: repeating-linear-gradient(
+      45deg, var(--fire) 0, var(--fire) 1px, transparent 0, transparent 50%
+    );
+    background-size: 20px 20px;
+  }
+  .hero-glow {
+    position: absolute; right: -10%; top: 50%;
+    transform: translateY(-50%);
+    width: 60vw; height: 60vw; max-width: 700px; max-height: 700px;
+    background: radial-gradient(circle, rgba(201,68,10,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 5vw; max-width: 700px;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--fire); margin-bottom: 1.5rem;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block;
+    width: 2rem; height: 1px; background: var(--fire);
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 8vw, 7rem);
+    font-weight: 900; line-height: 0.9;
+    color: var(--cream); margin-bottom: 0.3em;
+  }
+  .hero-title .accent { color: var(--fire); display: block; }
+  .hero-subtitle {
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    color: var(--muted); font-weight: 300;
+    line-height: 1.6; margin-bottom: 2.5rem;
+    max-width: 480px;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--fire); color: var(--cream);
+    padding: 1rem 2.2rem; text-decoration: none;
+    font-size: 0.85rem; font-weight: 600; letter-spacing: 0.12em;
+    text-transform: uppercase; transition: background 0.25s;
+  }
+  .btn-primary:hover { background: var(--ember); }
+  .btn-secondary {
+    border: 1px solid rgba(249,243,236,0.25); color: var(--cream);
+    padding: 1rem 2.2rem; text-decoration: none;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 0.08em;
+    transition: border-color 0.25s;
+  }
+  .btn-secondary:hover { border-color: var(--cream); }
+  .hero-stats {
+    position: absolute; bottom: 3rem; right: 5vw;
+    display: flex; gap: 3rem;
+  }
+  .hero-stat { text-align: right; }
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem; font-weight: 900; color: var(--cream);
+    line-height: 1;
+  }
+  .hero-stat-label {
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted); margin-top: 0.3rem;
+  }
+
+  /* ── FLAME DIVIDER ── */
+  .flame-divider {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 0 5vw; margin: 1rem 0;
+  }
+  .flame-divider::before, .flame-divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(201,68,10,0.4), transparent);
+  }
+  .flame-divider-icon { color: var(--fire); font-size: 1.4rem; }
+
+  /* ── SECTIONS ── */
+  section { padding: 6rem 5vw; }
+
+  .section-eyebrow {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--fire);
+    margin-bottom: 0.8rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; color: var(--cream);
+    line-height: 1.15; margin-bottom: 1.2rem;
+  }
+  .section-body {
+    color: var(--muted); font-size: 1rem;
+    line-height: 1.75; max-width: 560px;
+  }
+
+  /* ── ABOUT ── */
+  .about { background: var(--ash); }
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+  }
+  .about-visual {
+    position: relative; height: 480px;
+  }
+  .about-card {
+    position: absolute; background: var(--charcoal);
+    border: 1px solid rgba(201,68,10,0.2);
+    padding: 2rem;
+  }
+  .about-card-main {
+    inset: 0 2rem 2rem 0;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #1f1510, #2a1a0e);
+  }
+  .about-card-main-inner { text-align: center; }
+  .about-icon { font-size: 4rem; margin-bottom: 1rem; }
+  .about-card-main-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; color: var(--cream); font-weight: 700;
+  }
+  .about-card-accent {
+    bottom: 0; right: 0; width: 180px;
+    background: var(--fire); border: none; text-align: center;
+  }
+  .about-card-accent-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem; font-weight: 900; color: var(--cream); line-height: 1;
+  }
+  .about-card-accent-text {
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; color: rgba(249,243,236,0.8); margin-top: 0.3rem;
+  }
+  .about-badges { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: 2rem; }
+  .badge {
+    border: 1px solid rgba(201,68,10,0.3);
+    padding: 0.4rem 0.9rem;
+    font-size: 0.75rem; font-weight: 500; letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+
+  /* ── MENU ── */
+  .menu { background: var(--charcoal); }
+  .menu-header {
+    display: flex; justify-content: space-between;
+    align-items: flex-end; margin-bottom: 3.5rem;
+  }
+  .menu-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5px; background: rgba(201,68,10,0.15);
+  }
+  .menu-item {
+    background: var(--charcoal); padding: 2.2rem;
+    transition: background 0.25s;
+    position: relative; overflow: hidden;
+  }
+  .menu-item::before {
+    content: ''; position: absolute;
+    bottom: 0; left: 0; right: 0; height: 2px;
+    background: var(--fire); transform: scaleX(0);
+    transform-origin: left; transition: transform 0.35s;
+  }
+  .menu-item:hover { background: var(--ash); }
+  .menu-item:hover::before { transform: scaleX(1); }
+  .menu-item-emoji { font-size: 2.2rem; margin-bottom: 1rem; }
+  .menu-item-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700; color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+  .menu-item-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; }
+  .menu-item-price {
+    margin-top: 1.2rem; font-size: 0.9rem; font-weight: 600;
+    color: var(--gold);
+  }
+  .menu-item.featured {
+    background: linear-gradient(135deg, #1f1205, #2a1800);
+    border: 1px solid rgba(201,68,10,0.4);
+  }
+  .menu-item.featured .menu-item-name { color: var(--ember); }
+  .featured-tag {
+    display: inline-block;
+    background: var(--fire); color: var(--cream);
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em;
+    text-transform: uppercase; padding: 0.2rem 0.6rem;
+    margin-bottom: 0.8rem;
+  }
+
+  /* ── EXPERIENCE ── */
+  .experience { background: var(--ash); }
+  .exp-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 2rem; margin-top: 4rem;
+  }
+  .exp-item { border-top: 1px solid rgba(201,68,10,0.25); padding-top: 1.5rem; }
+  .exp-icon {
+    font-size: 1.8rem; margin-bottom: 1rem; display: block;
+  }
+  .exp-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem; font-weight: 700; color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+  .exp-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+
+  /* ── HOURS ── */
+  .hours { background: var(--charcoal); }
+  .hours-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: start;
+  }
+  .hours-table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
+  .hours-table tr { border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .hours-table td { padding: 1rem 0; font-size: 0.9rem; }
+  .hours-table td:first-child { color: var(--muted); }
+  .hours-table td:last-child { text-align: right; color: var(--cream); font-weight: 500; }
+  .hours-table tr.highlight td { color: var(--gold); }
+  .hours-table tr.highlight td:last-child { color: var(--ember); }
+  .contact-block { margin-top: 2rem; }
+  .contact-item {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1.1rem 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .contact-icon { font-size: 1.2rem; flex-shrink: 0; }
+  .contact-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+  .contact-value { font-size: 0.92rem; color: var(--cream); margin-top: 0.1rem; }
+  .location-note {
+    margin-top: 2rem; padding: 1.5rem;
+    border: 1px solid rgba(201,68,10,0.2);
+    font-size: 0.85rem; color: var(--muted); line-height: 1.6;
+  }
+  .location-note strong { color: var(--cream); }
+
+  /* ── DRIVE-THRU BANNER ── */
+  .drivethu-banner {
+    background: var(--fire);
+    padding: 3rem 5vw;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 2rem; flex-wrap: wrap;
+  }
+  .drivethu-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 900; color: var(--cream);
+  }
+  .drivethu-sub {
+    font-size: 0.9rem; color: rgba(249,243,236,0.8);
+    margin-top: 0.4rem;
+  }
+  .drivethu-cta {
+    background: var(--cream); color: var(--fire);
+    padding: 0.9rem 2rem; text-decoration: none;
+    font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; white-space: nowrap;
+    transition: opacity 0.2s;
+  }
+  .drivethu-cta:hover { opacity: 0.9; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0d0a07;
+    padding: 3rem 5vw;
+    display: flex; justify-content: space-between;
+    align-items: center; gap: 2rem; flex-wrap: wrap;
+    border-top: 1px solid rgba(201,68,10,0.15);
+  }
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 900; color: var(--cream);
+  }
+  .footer-logo span { color: var(--fire); }
+  .footer-copy { font-size: 0.78rem; color: var(--muted); }
+  .footer-social { display: flex; gap: 1rem; }
+  .social-link {
+    border: 1px solid rgba(255,255,255,0.12);
+    width: 2.2rem; height: 2.2rem;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none; color: var(--muted); font-size: 0.9rem;
+    transition: all 0.25s;
+  }
+  .social-link:hover { border-color: var(--fire); color: var(--fire); }
+
+  /* ── SCROLL ANIMATION ── */
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.65s ease, transform 0.65s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── MOBILE ── */
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .about-grid, .hours-grid { grid-template-columns: 1fr; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .exp-grid { grid-template-columns: 1fr 1fr; }
+    .about-visual { height: 280px; }
+    .hero-stats { position: static; margin-top: 3rem; justify-content: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Lulu's<span>'</span>s Grill</div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#experiencia">Experiência</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <a href="tel:+244947226811" class="nav-cta">Reservar</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Nova Vida · Luanda</div>
+    <h1 class="hero-title">
+      Grelhados
+      <span class="accent">da Terra.</span>
+    </h1>
+    <p class="hero-subtitle">
+      Um oásis gastronómico à entrada do Nova Vida. Churrasco autêntico, ambiente acolhedor, e o melhor cabrité de Luanda.
+    </p>
+    <div class="hero-actions">
+      <a href="tel:+244947226811" class="btn-primary">🍗 Reservar Mesa</a>
+      <a href="#menu" class="btn-secondary">Ver o Menu</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <div class="hero-stat-num">2022</div>
+      <div class="hero-stat-label">Fundado em</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">4.4k</div>
+      <div class="hero-stat-label">Seguidores</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">★ 1º</div>
+      <div class="hero-stat-label">Drive-Thru grill</div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="sobre">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <div class="section-eyebrow">A Nossa História</div>
+      <h2 class="section-title">Consistência desde outubro de 2022.</h2>
+      <p class="section-body">
+        Desde que abrimos as portas no Nova Vida, o Lulu's Grill tornou-se um verdadeiro ponto de encontro que combina gastronomia honesta com um ambiente acolhedor. Somos muito mais do que um restaurante — somos um espaço cultural e social com uma agenda vibrante.
+      </p>
+      <p class="section-body" style="margin-top:1rem">
+        Com pratos a preços acessíveis e uma especialidade que já conquistou todos — o nosso cabrité é simplesmente o melhor da zona.
+      </p>
+      <div class="about-badges">
+        <span class="badge">🍗 Grelhados Caseiros</span>
+        <span class="badge">🚗 Drive-Thru</span>
+        <span class="badge">🎵 DJ às Quintas e Sextas</span>
+        <span class="badge">🌿 Esplanada</span>
+      </div>
+    </div>
+    <div class="about-visual reveal">
+      <div class="about-card about-card-main">
+        <div class="about-card-main-inner">
+          <div class="about-icon">🔥</div>
+          <div class="about-card-main-text">Grelhados<br>de Excelência</div>
+        </div>
+      </div>
+      <div class="about-card about-card-accent">
+        <div class="about-card-accent-num">~7k</div>
+        <div class="about-card-accent-text">AKZ por prato</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DRIVE-THRU BANNER -->
+<div class="drivethu-banner">
+  <div>
+    <div class="drivethu-text">🚗 Lulu's tem Drive-Thru!</div>
+    <div class="drivethu-sub">Um dos únicos Drive-Thru grill de Luanda — sem sair do carro.</div>
+  </div>
+  <a href="tel:+244947226811" class="drivethu-cta">Ligar Agora</a>
+</div>
+
+<!-- MENU -->
+<section class="menu" id="menu">
+  <div class="menu-header">
+    <div>
+      <div class="section-eyebrow">O Nosso Menu</div>
+      <h2 class="section-title">Os pratos que nos definem.</h2>
+    </div>
+    <p style="color:var(--muted); font-size:0.85rem; max-width:260px; text-align:right; line-height:1.6;">
+      Especialidades da grelha acompanhadas dos melhores sabores de Angola.
+    </p>
+  </div>
+  <div class="menu-grid">
+
+    <div class="menu-item featured reveal">
+      <span class="featured-tag">⭐ Estrela da Casa</span>
+      <div class="menu-item-emoji">🐐</div>
+      <div class="menu-item-name">Cabrité Grelhado</div>
+      <div class="menu-item-desc">O nosso prato mais icónico. Cabrité grelhado lentamente no carvão com especiarias da terra — considerado o melhor da zona do Nova Vida.</div>
+      <div class="menu-item-price">~7.000 AKZ</div>
+    </div>
+
+    <div class="menu-item reveal">
+      <div class="menu-item-emoji">🥩</div>
+      <div class="menu-item-name">Grelhada Mista</div>
+      <div class="menu-item-desc">Uma selecção generosa das melhores carnes da grelha, perfeita para partilhar em família ou com amigos.</div>
+      <div class="menu-item-price">~7.000 AKZ</div>
+    </div>
+
+    <div class="menu-item reveal">
+      <div class="menu-item-emoji">🍗</div>
+      <div class="menu-item-name">Churrasco</div>
+      <div class="menu-item-desc">O clássico que dá nome ao Lulu's. Frango de churrasco preparado com a nossa marinada especial, suculento e cheio de sabor.</div>
+      <div class="menu-item-price">~7.000 AKZ</div>
+    </div>
+
+    <div class="menu-item reveal">
+      <div class="menu-item-emoji">🍚</div>
+      <div class="menu-item-name">Arroz Branco & Feijão</div>
+      <div class="menu-item-desc">Acompanhamentos clássicos da mesa angolana. Feijão preto temperado e arroz branco solto, sempre no ponto.</div>
+      <div class="menu-item-price">Incluído</div>
+    </div>
+
+    <div class="menu-item reveal">
+      <div class="menu-item-emoji">🍟</div>
+      <div class="menu-item-name">Batata Frita Doce</div>
+      <div class="menu-item-desc">Batata-doce frita crocante por fora e macia por dentro, um acompanhamento irresistível para qualquer grelhado.</div>
+      <div class="menu-item-price">Incluído</div>
+    </div>
+
+    <div class="menu-item reveal">
+      <div class="menu-item-emoji">🍌</div>
+      <div class="menu-item-name">Banana Pão Grelhada</div>
+      <div class="menu-item-desc">Um toque angolano inconfundível. Banana pão grelhada, doce e caramelizada, o acompanhamento que faz a diferença.</div>
+      <div class="menu-item-price">Incluído</div>
+    </div>
+
+    <div class="menu-item reveal">
+      <div class="menu-item-emoji">🍹</div>
+      <div class="menu-item-name">Cocktails de Autor</div>
+      <div class="menu-item-desc">Bebidas pensadas para impressionar — do primeiro gole ao último brinde. Refrescantes, equilibradas e cheias de sabor.</div>
+      <div class="menu-item-price">Consultar</div>
+    </div>
+
+    <div class="menu-item reveal">
+      <div class="menu-item-emoji">🍺</div>
+      <div class="menu-item-name">Cerveja & Bebidas</div>
+      <div class="menu-item-desc">Uma selecção de cervejas e refrigerantes para acompanhar a sua refeição ou apenas para desfrutar na esplanada.</div>
+      <div class="menu-item-price">Consultar</div>
+    </div>
+
+    <div class="menu-item reveal" style="display:flex; align-items:center; justify-content:center; text-align:center; background: linear-gradient(135deg, #1a1008, #120c04);">
+      <div>
+        <div style="font-size:2rem; margin-bottom:0.8rem;">📞</div>
+        <div style="font-family:'Playfair Display',serif; font-size:1rem; color:var(--cream); margin-bottom:0.5rem;">Prato do Dia</div>
+        <div style="font-size:0.8rem; color:var(--muted); margin-bottom:1rem;">Pergunta-nos o que há hoje na grelha</div>
+        <a href="tel:+244947226811" style="color:var(--fire); font-size:0.85rem; font-weight:600; text-decoration:none;">+244 947 226 811</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experiencia">
+  <div class="section-eyebrow">Mais do que Comida</div>
+  <h2 class="section-title">Uma experiência completa.</h2>
+  <div class="exp-grid">
+    <div class="exp-item reveal">
+      <span class="exp-icon">🎵</span>
+      <div class="exp-title">DJ às Quintas e Sextas</div>
+      <div class="exp-desc">O ambiente da esplanada ganha vida com música ao vivo, criando a atmosfera perfeita para jantar com estilo.</div>
+    </div>
+    <div class="exp-item reveal">
+      <span class="exp-icon">🌿</span>
+      <div class="exp-title">Esplanada Acolhedora</div>
+      <div class="exp-desc">Desfrute das noites luandenses numa esplanada ampla, fresca e confortável. O sítio ideal para refeições em grupo.</div>
+    </div>
+    <div class="exp-item reveal">
+      <span class="exp-icon">🚗</span>
+      <div class="exp-title">Drive-Thru Único</div>
+      <div class="exp-desc">Um dos únicos Drive-Thru grill de Luanda — para quando quer os sabores do Lulu's sem sair do conforto do seu carro.</div>
+    </div>
+    <div class="exp-item reveal">
+      <span class="exp-icon">👨‍👩‍👧‍👦</span>
+      <div class="exp-title">Espaço para Famílias</div>
+      <div class="exp-desc">Ambiente informal e acolhedor, perfeito para reunir a família ao fim de semana num espaço seguro e animado.</div>
+    </div>
+  </div>
+</section>
+
+<!-- HOURS & CONTACT -->
+<section class="hours" id="contacto">
+  <div class="hours-grid">
+    <div class="reveal">
+      <div class="section-eyebrow">Horário</div>
+      <h2 class="section-title">Quando nos visitar.</h2>
+      <table class="hours-table">
+        <tr>
+          <td>Segunda – Quarta</td>
+          <td>12:00 – 22:00</td>
+        </tr>
+        <tr class="highlight">
+          <td>Quinta – Sexta</td>
+          <td>12:00 – 00:00 🎵</td>
+        </tr>
+        <tr class="highlight">
+          <td>Sábado</td>
+          <td>11:00 – 00:00</td>
+        </tr>
+        <tr class="highlight">
+          <td>Domingo</td>
+          <td>11:00 – 22:00</td>
+        </tr>
+      </table>
+      <p style="margin-top:1.5rem; font-size:0.8rem; color:var(--muted); line-height:1.6;">
+        🎵 DJ na esplanada às quintas e sextas-feiras a partir das 20:00. Reserva recomendada ao fim de semana.
+      </p>
+    </div>
+    <div class="reveal">
+      <div class="section-eyebrow">Contacto</div>
+      <h2 class="section-title">Fale connosco.</h2>
+      <div class="contact-block">
+        <div class="contact-item">
+          <span class="contact-icon">📞</span>
+          <div>
+            <div class="contact-label">Reservas & Delivery</div>
+            <div class="contact-value"><a href="tel:+244947226811" style="color:inherit; text-decoration:none;">+244 947 226 811</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">✉️</span>
+          <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-value"><a href="mailto:Grill@lulus.ao" style="color:inherit; text-decoration:none;">Grill@lulus.ao</a></div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">📍</span>
+          <div>
+            <div class="contact-label">Morada</div>
+            <div class="contact-value">Urbanização Nova Vida, Rua 58, Luanda</div>
+          </div>
+        </div>
+        <div class="contact-item">
+          <span class="contact-icon">📱</span>
+          <div>
+            <div class="contact-label">Instagram</div>
+            <div class="contact-value"><a href="https://instagram.com/lulus.grill" target="_blank" style="color:var(--fire); text-decoration:none;">@lulus.grill</a></div>
+          </div>
+        </div>
+      </div>
+      <div class="location-note">
+        📍 <strong>Como chegar:</strong> Estamos na principal entrada da Urbanização Nova Vida, na Rua 58. O nosso Drive-Thru é visível da via principal — pode não precisar de sair do carro!
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">Lulu<span>'s</span> Grill</div>
+    <div class="footer-copy" style="margin-top:0.4rem">Um oásis gastronómico no Nova Vida, Luanda · Desde 2022</div>
+  </div>
+  <div class="footer-social">
+    <a href="https://instagram.com/lulus.grill" target="_blank" class="social-link" title="Instagram">ig</a>
+    <a href="https://www.facebook.com/restaurante.lulus.grill/" target="_blank" class="social-link" title="Facebook">fb</a>
+    <a href="tel:+244947226811" class="social-link" title="Telefone">☎</a>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
